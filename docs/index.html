@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Lattice Benchmark Remediation Pack — Findings</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:1000px;margin:2em auto;padding:0 1em;line-height:1.5;color:#111}
+table{border-collapse:collapse;margin:1em 0;width:100%;font-size:.92em}
+th,td{border:1px solid #999;padding:.35em .6em;text-align:left;vertical-align:top}
+th{background:#eee}
+pre{white-space:pre-wrap;background:#f6f6f6;padding:1em;overflow-x:auto}
+code{background:#f0f0f0;padding:0 .2em}
+h1{font-size:1.6em} h2{border-top:2px solid #333;padding-top:.6em}
+</style></head><body>
+<h1>Lattice Benchmark Remediation Pack</h1>
+<p>Reproducible ML-KEM / ML-DSA benchmarking across pinned liboqs 0.16.0 (C),
+kyber-py 1.2.0 and dilithium-py 1.5.1 (pure Python), with adversarial-input
+behaviour, one reproduced core-protocol weakness and a tested remediation.
+All numbers below are the medians from <code>outputs/run1/</code>; timing
+values vary between runs by design (see README.md, comparison rule).
+Rust and Go were not benchmarked: this machine has no cargo/rustc or Go
+toolchain.</p>
+
+<h2>Throughput — ML-KEM (median ms per operation, liboqs / kyber-py)</h2>
+<table><thead><tr><th>Parameter set</th><th>Keygen</th><th>Encaps</th><th>Decaps</th><th>Peak RSS KB (liboqs / kyber-py)</th></tr></thead><tbody><tr><td>ML-KEM-512</td><td>0.0184 / 5.3770</td><td>0.0207 / 7.8741</td><td>0.0233 / 11.2195</td><td>5808 / 19380</td></tr><tr><td>ML-KEM-768</td><td>0.0298 / 9.1693</td><td>0.0316 / 12.2895</td><td>0.0369 / 16.6444</td><td>5928 / 19208</td></tr><tr><td>ML-KEM-1024</td><td>0.0397 / 13.9931</td><td>0.0426 / 17.8957</td><td>0.0506 / 23.2753</td><td>5860 / 19324</td></tr></tbody></table>
+
+<h2>Throughput — ML-DSA (median ms per operation, liboqs / dilithium-py)</h2>
+<table><thead><tr><th>Parameter set</th><th>Keygen</th><th>Sign</th><th>Verify</th><th>Peak RSS KB (liboqs / dilithium-py)</th></tr></thead><tbody><tr><td>ML-DSA-44</td><td>0.0578 / 16.5662</td><td>0.2058 / 84.4472</td><td>0.0655 / 20.6585</td><td>5892 / 20024</td></tr><tr><td>ML-DSA-65</td><td>0.1003 / 27.2465</td><td>0.2729 / 125.9273</td><td>0.0952 / 31.9958</td><td>5888 / 20548</td></tr><tr><td>ML-DSA-87</td><td>0.1509 / 44.6017</td><td>0.3125 / 203.9834</td><td>0.1463 / 48.8566</td><td>5972 / 21072</td></tr></tbody></table>
+
+<h2>Adversarial-input behaviour</h2>
+<table><thead><tr><th>Parameter set</th><th>Case</th><th>Outcome</th></tr></thead><tbody><tr><td>ML-DSA-44</td><td>dilithium_cross_param</td><td>refused_ValueError</td></tr><tr><td>ML-DSA-44</td><td>dilithium_ctx_300B</td><td>refused_ValueError</td></tr><tr><td>ML-DSA-44</td><td>dilithium_flipped_sig</td><td>False</td></tr><tr><td>ML-DSA-44</td><td>dilithium_truncated_sig</td><td>returns_False</td></tr><tr><td>ML-DSA-44</td><td>dilithium_valid</td><td>True</td></tr><tr><td>ML-DSA-44</td><td>dilithium_wrong_ctx</td><td>False</td></tr><tr><td>ML-DSA-44</td><td>dilithium_wrong_msg</td><td>False</td></tr><tr><td>ML-DSA-44</td><td>liboqs_cross_param</td><td>refused_length_check</td></tr><tr><td>ML-DSA-44</td><td>liboqs_ctx_300B</td><td>refused_sign_failed</td></tr><tr><td>ML-DSA-44</td><td>liboqs_flipped_sig</td><td>INVALID</td></tr><tr><td>ML-DSA-44</td><td>liboqs_truncated_sig</td><td>refused_length_check</td></tr><tr><td>ML-DSA-44</td><td>liboqs_valid</td><td>True</td></tr><tr><td>ML-DSA-44</td><td>liboqs_wrong_ctx</td><td>INVALID</td></tr><tr><td>ML-DSA-44</td><td>liboqs_wrong_msg</td><td>INVALID</td></tr><tr><td>ML-DSA-65</td><td>dilithium_cross_param</td><td>refused_ValueError</td></tr><tr><td>ML-DSA-65</td><td>dilithium_ctx_300B</td><td>refused_ValueError</td></tr><tr><td>ML-DSA-65</td><td>dilithium_flipped_sig</td><td>False</td></tr><tr><td>ML-DSA-65</td><td>dilithium_truncated_sig</td><td>returns_False</td></tr><tr><td>ML-DSA-65</td><td>dilithium_valid</td><td>True</td></tr><tr><td>ML-DSA-65</td><td>dilithium_wrong_ctx</td><td>False</td></tr><tr><td>ML-DSA-65</td><td>dilithium_wrong_msg</td><td>False</td></tr><tr><td>ML-DSA-65</td><td>liboqs_cross_param</td><td>refused_length_check</td></tr><tr><td>ML-DSA-65</td><td>liboqs_ctx_300B</td><td>refused_sign_failed</td></tr><tr><td>ML-DSA-65</td><td>liboqs_flipped_sig</td><td>INVALID</td></tr><tr><td>ML-DSA-65</td><td>liboqs_truncated_sig</td><td>refused_length_check</td></tr><tr><td>ML-DSA-65</td><td>liboqs_valid</td><td>True</td></tr><tr><td>ML-DSA-65</td><td>liboqs_wrong_ctx</td><td>INVALID</td></tr><tr><td>ML-DSA-65</td><td>liboqs_wrong_msg</td><td>INVALID</td></tr><tr><td>ML-DSA-87</td><td>dilithium_cross_param</td><td>refused_ValueError</td></tr><tr><td>ML-DSA-87</td><td>dilithium_ctx_300B</td><td>refused_ValueError</td></tr><tr><td>ML-DSA-87</td><td>dilithium_flipped_sig</td><td>False</td></tr><tr><td>ML-DSA-87</td><td>dilithium_truncated_sig</td><td>returns_False</td></tr><tr><td>ML-DSA-87</td><td>dilithium_valid</td><td>True</td></tr><tr><td>ML-DSA-87</td><td>dilithium_wrong_ctx</td><td>False</td></tr><tr><td>ML-DSA-87</td><td>dilithium_wrong_msg</td><td>False</td></tr><tr><td>ML-DSA-87</td><td>liboqs_cross_param</td><td>refused_length_check</td></tr><tr><td>ML-DSA-87</td><td>liboqs_ctx_300B</td><td>refused_sign_failed</td></tr><tr><td>ML-DSA-87</td><td>liboqs_flipped_sig</td><td>INVALID</td></tr><tr><td>ML-DSA-87</td><td>liboqs_truncated_sig</td><td>refused_length_check</td></tr><tr><td>ML-DSA-87</td><td>liboqs_valid</td><td>True</td></tr><tr><td>ML-DSA-87</td><td>liboqs_wrong_ctx</td><td>INVALID</td></tr><tr><td>ML-DSA-87</td><td>liboqs_wrong_msg</td><td>INVALID</td></tr><tr><td>ML-KEM-1024</td><td>kyber_flipped_ct</td><td>returns_32B_different_secret</td></tr><tr><td>ML-KEM-1024</td><td>kyber_oversized_ct</td><td>refused_ValueError</td></tr><tr><td>ML-KEM-1024</td><td>kyber_truncated_ct</td><td>refused_ValueError</td></tr><tr><td>ML-KEM-1024</td><td>kyber_valid_roundtrip</td><td>True</td></tr><tr><td>ML-KEM-1024</td><td>kyber_wrong_param_dk</td><td>refused_ValueError</td></tr><tr><td>ML-KEM-1024</td><td>kyber_zero_ct</td><td>returns_32B_different_secret</td></tr><tr><td>ML-KEM-1024</td><td>liboqs_flipped_ct</td><td>returns_32B_different_secret</td></tr><tr><td>ML-KEM-1024</td><td>liboqs_oversized_ct</td><td>refused_length_check</td></tr><tr><td>ML-KEM-1024</td><td>liboqs_truncated_ct</td><td>refused_length_check</td></tr><tr><td>ML-KEM-1024</td><td>liboqs_valid_roundtrip</td><td>True</td></tr><tr><td>ML-KEM-1024</td><td>liboqs_wrong_param_dk</td><td>refused_length_check</td></tr><tr><td>ML-KEM-1024</td><td>liboqs_zero_ct</td><td>returns_32B_different_secret</td></tr><tr><td>ML-KEM-512</td><td>kyber_flipped_ct</td><td>returns_32B_different_secret</td></tr><tr><td>ML-KEM-512</td><td>kyber_oversized_ct</td><td>refused_ValueError</td></tr><tr><td>ML-KEM-512</td><td>kyber_truncated_ct</td><td>refused_ValueError</td></tr><tr><td>ML-KEM-512</td><td>kyber_valid_roundtrip</td><td>True</td></tr><tr><td>ML-KEM-512</td><td>kyber_wrong_param_dk</td><td>refused_ValueError</td></tr><tr><td>ML-KEM-512</td><td>kyber_zero_ct</td><td>returns_32B_different_secret</td></tr><tr><td>ML-KEM-512</td><td>liboqs_flipped_ct</td><td>returns_32B_different_secret</td></tr><tr><td>ML-KEM-512</td><td>liboqs_oversized_ct</td><td>refused_length_check</td></tr><tr><td>ML-KEM-512</td><td>liboqs_truncated_ct</td><td>refused_length_check</td></tr><tr><td>ML-KEM-512</td><td>liboqs_valid_roundtrip</td><td>True</td></tr><tr><td>ML-KEM-512</td><td>liboqs_wrong_param_dk</td><td>refused_length_check</td></tr><tr><td>ML-KEM-512</td><td>liboqs_zero_ct</td><td>returns_32B_different_secret</td></tr><tr><td>ML-KEM-768</td><td>kyber_flipped_ct</td><td>returns_32B_different_secret</td></tr><tr><td>ML-KEM-768</td><td>kyber_oversized_ct</td><td>refused_ValueError</td></tr><tr><td>ML-KEM-768</td><td>kyber_truncated_ct</td><td>refused_ValueError</td></tr><tr><td>ML-KEM-768</td><td>kyber_valid_roundtrip</td><td>True</td></tr><tr><td>ML-KEM-768</td><td>kyber_wrong_param_dk</td><td>refused_ValueError</td></tr><tr><td>ML-KEM-768</td><td>kyber_zero_ct</td><td>returns_32B_different_secret</td></tr><tr><td>ML-KEM-768</td><td>liboqs_flipped_ct</td><td>returns_32B_different_secret</td></tr><tr><td>ML-KEM-768</td><td>liboqs_oversized_ct</td><td>refused_length_check</td></tr><tr><td>ML-KEM-768</td><td>liboqs_truncated_ct</td><td>refused_length_check</td></tr><tr><td>ML-KEM-768</td><td>liboqs_valid_roundtrip</td><td>True</td></tr><tr><td>ML-KEM-768</td><td>liboqs_wrong_param_dk</td><td>refused_length_check</td></tr><tr><td>ML-KEM-768</td><td>liboqs_zero_ct</td><td>returns_32B_different_secret</td></tr></tbody></table>
+
+<h2>Cross-implementation agreement</h2>
+<table><thead><tr><th>Parameter set</th><th>Check</th><th>Result</th></tr></thead><tbody><tr><td>ML-DSA-44</td><td>sig_deterministic_dilithium_sign_liboqs_verify</td><td>True</td></tr><tr><td>ML-DSA-44</td><td>sig_dilithium_sign_liboqs_verify</td><td>True</td></tr><tr><td>ML-DSA-44</td><td>sig_liboqs_sign_dilithium_verify</td><td>True</td></tr><tr><td>ML-DSA-65</td><td>sig_deterministic_dilithium_sign_liboqs_verify</td><td>True</td></tr><tr><td>ML-DSA-65</td><td>sig_dilithium_sign_liboqs_verify</td><td>True</td></tr><tr><td>ML-DSA-65</td><td>sig_liboqs_sign_dilithium_verify</td><td>True</td></tr><tr><td>ML-DSA-87</td><td>sig_deterministic_dilithium_sign_liboqs_verify</td><td>True</td></tr><tr><td>ML-DSA-87</td><td>sig_dilithium_sign_liboqs_verify</td><td>True</td></tr><tr><td>ML-DSA-87</td><td>sig_liboqs_sign_dilithium_verify</td><td>True</td></tr><tr><td>ML-KEM-1024</td><td>kem_kyber_encaps_liboqs_decaps</td><td>True</td></tr><tr><td>ML-KEM-1024</td><td>kem_liboqs_encaps_kyber_decaps</td><td>True</td></tr><tr><td>ML-KEM-512</td><td>kem_kyber_encaps_liboqs_decaps</td><td>True</td></tr><tr><td>ML-KEM-512</td><td>kem_liboqs_encaps_kyber_decaps</td><td>True</td></tr><tr><td>ML-KEM-768</td><td>kem_kyber_encaps_liboqs_decaps</td><td>True</td></tr><tr><td>ML-KEM-768</td><td>kem_liboqs_encaps_kyber_decaps</td><td>True</td></tr></tbody></table>
+
+<h2>Signing determinism</h2>
+<table><thead><tr><th>Parameter set</th><th>Check</th><th>Result</th></tr></thead><tbody><tr><td>ML-DSA-44</td><td>dilithium_deterministic_sign_twice_identical</td><td>True</td></tr><tr><td>ML-DSA-44</td><td>dilithium_hedged_sign_twice_identical</td><td>False</td></tr><tr><td>ML-DSA-44</td><td>liboqs_hedged_sign_twice_identical</td><td>no</td></tr><tr><td>ML-DSA-65</td><td>dilithium_deterministic_sign_twice_identical</td><td>True</td></tr><tr><td>ML-DSA-65</td><td>dilithium_hedged_sign_twice_identical</td><td>False</td></tr><tr><td>ML-DSA-65</td><td>liboqs_hedged_sign_twice_identical</td><td>no</td></tr><tr><td>ML-DSA-87</td><td>dilithium_deterministic_sign_twice_identical</td><td>True</td></tr><tr><td>ML-DSA-87</td><td>dilithium_hedged_sign_twice_identical</td><td>False</td></tr><tr><td>ML-DSA-87</td><td>liboqs_hedged_sign_twice_identical</td><td>no</td></tr><tr><td>ML-KEM-768</td><td>kyber_encaps_twice_identical_ct</td><td>False</td></tr><tr><td>ML-KEM-768</td><td>kyber_encaps_twice_identical_ss</td><td>False</td></tr></tbody></table>
+
+<h2>Findings</h2>
+<pre># Findings — Lattice Benchmark Remediation Pack
+
+Severity-ranked findings from the benchmark and adversarial runs
+(`outputs/run1/`, `outputs/run2-clean/`). Every finding is an actually
+observed behaviour, with the trigger command and the evidence location
+given. Where the implementations behave correctly, that is stated as a
+verified-behaviour finding rather than a weakness. The ONE reproduced
+core-protocol weakness is F-01; it is new and is not the implicit-rejection
+assessment from the earlier ML-KEM work (that work tested FIPS 203
+ML-KEM.Decaps implicit rejection in ML-KEM-768 only; ML-DSA and
+deterministic signing were not part of it).
+
+## F-01 — Medium: dilithium-py deterministic ML-DSA signing silently drops the FIPS 204 randomized-signing hedge
+
+**Observed.** `ML_DSA.sign(sk, message, deterministic=True)` in
+dilithium-py 1.5.1 returns byte-identical signatures every time the same
+key signs the same message, while the default (hedged) path returns a
+different signature on every signing. Both kinds of signature verify
+under dilithium-py itself **and** under liboqs 0.16.0, and no verifier in
+either implementation can tell a deterministic signature apart from a
+hedged one.
+
+Trigger:
+
+```sh
+python3 remediation/reproduce_weakness.py --driver src/pq_driver
+```
+
+Output (run1, `outputs/run1/remediation-before.log`): hedged signatures
+differ (`identical: False`), deterministic signatures are identical
+(`identical: True`), both verify under dilithium-py, and the deterministic
+signature verifies `VALID` under liboqs 0.16.0. Exit code 0 =
+reproduced. The same result holds for ML-DSA-44/65/87 in the benchmark
+harness (`outputs/run1/benchmark-run.log`, `DET` lines:
+`dilithium_deterministic_identical=True` for all three parameter sets,
+while `liboqs_sign_twice_identical=no` and
+`dilithium_hedged_identical=False`).
+
+**Why it matters.** FIPS 204 §3.4 (&quot;Hedged and Deterministic Signing&quot;)
+specifies hedged signing as the default: fresh randomness `rnd` is used
+at signing time, and &quot;the primary purpose of rnd is to facilitate
+countermeasures to side-channel attacks and fault attacks on
+deterministic signatures&quot;. The deterministic variant is permitted only
+&quot;in case the signer has no access to a fresh source of randomness&quot;, and
+&quot;the lack of randomness in the deterministic variant makes the risk of
+side-channel attacks (particularly fault attacks) more difficult to
+mitigate&quot;. The same verification algorithm accepts signatures from
+either variant, so a deployment that (mis)uses `deterministic=True` —
+for example to get reproducible signatures for golden-file tests or
+&quot;stable&quot; release artefacts, as in `remediation/vulnerable_caller.py` —
+loses that protection with no observable signal anywhere in the system:
+nothing fails, nothing warns, and every signature verifies.
+
+**Remediation (tested).** `remediation/hedged_sign.py` wraps signing so
+that the hedged path is the only path: `hedged_sign()` always calls the
+library with `deterministic=False` and raises `RepeatedSignatureError`
+if the library ever returns a signature identical to one already issued
+for the same key and message; `deterministic_sign()` requires an
+explicit `allow_deterministic=True` keyword plus a reason, and logs a
+warning to stderr on every use. The patch
+(`remediation/remediation.patch`) converts the vulnerable caller to the
+wrapper. The regression test (`remediation/test_remediation.py`,
+`outputs/run1/remediation-after.log`) reproduces the weakness in its
+BEFORE section (identical deterministic signatures) and passes all
+checks AFTER: hedged signatures differ, both verify under dilithium-py
+and liboqs, deterministic mode without the opt-in raises, with the
+opt-in it works and warns, the patch applies cleanly and the patched
+caller produces differing signatures, and the repeat-signature tripwire
+fires.
+
+**Severity: Medium.** The weakness requires a caller to opt into
+`deterministic=True`; the default path in both implementations is hedged,
+and deterministic signing is permitted by the standard. But the drop is
+completely silent and undetectable by any verifier, the opt-in is a
+single boolean keyword away, and the protected property (fault-attack
+resistance) is exactly the one the standard says the hedge exists for.
+No key recovery was demonstrated — no fault injection was performed —
+so this is not rated High.
+
+## F-02 — Medium: liboqs signature/KEM functions take bare pointers with no lengths; callers must validate
+
+**Observed.** `OQS_SIG_sign`, `OQS_SIG_verify`, `OQS_KEM_encaps` and
+`OQS_KEM_decaps` take pointers and no lengths
+(`src/sig/sig.h`, `src/kem/kem.h` in liboqs 0.16.0). The FIPS 204 §3.6.2
+requirement that verification &quot;shall return false whenever the lengths
+of either of these inputs differ from their lengths specified in this
+standard&quot; therefore cannot be enforced by the library function itself.
+In this pack the checks are enforced by the driver
+(`src/pq_driver.c`) before any call: a truncated signature is refused
+with `ERROR signature length check failed: expected 2420 bytes, got
+2418`, a wrong-parameter-set public key with `ERROR public key length
+check failed: expected 1952 bytes, got 1312`, and truncated/oversized
+ciphertexts and wrong-parameter-set decapsulation keys with the
+analogous messages, for all six parameter sets
+(`outputs/run1/benchmark-run.log`, `ADV` lines:
+`liboqs_truncated_ct = refused_length_check`,
+`liboqs_oversized_ct = refused_length_check`,
+`liboqs_wrong_param_dk = refused_length_check`,
+`liboqs_truncated_sig = refused_length_check`,
+`liboqs_cross_param = refused_length_check`).
+
+**Why it matters.** A caller that passes a short buffer directly to the
+library gets no refusal from the library — the fixed-size code would
+read past the supplied buffer. This is the signature-side analogue of
+the KEM API-shape observation from the earlier ML-KEM work, now
+demonstrated for ML-DSA sign/verify as well as ML-KEM encaps/decaps
+across all parameter sets. Mitigation: validate lengths against the
+`length_*` members before calling, as the driver does.
+
+**Severity: Medium.** The failure mode requires a caller mistake, and
+the library documents the caller-responsibility contract — but the
+missing length check is a real, standard-required check that the API
+cannot express.
+
+## F-03 — Low: error-signalling differs across implementations for the same invalid inputs
+
+**Observed.** For truncated signatures, wrong-parameter-set keys and
+oversized contexts, dilithium-py raises a Python `ValueError` (e.g.
+`PK packed bytes is of the wrong length`), while the liboqs path
+returns a bare status code (`ERROR sign failed status -1` for a
+300-byte context) or a driver-level refusal string for wrong lengths.
+In particular, dilithium-py&#x27;s cross-parameter-set verification raises
+instead of returning `False`, although FIPS 204 §3.6.2 says verification
+&quot;shall return false&quot; for wrong-length inputs
+(`outputs/run1/benchmark-run.log`, `ADV` lines:
+`dilithium_truncated_sig = refused_ValueError`,
+`dilithium_cross_param = refused_ValueError`,
+`dilithium_ctx_300B = refused_ValueError`).
+
+**Why it matters.** Integrators bridging the two APIs must handle two
+different failure channels; a caller that only checks one channel can
+mistake a refusal for a success — and a caller that does not catch the
+exception gets a crash instead of a clean verification failure. Low
+severity: both implementations refuse, and the difference is visible in
+the logs rather than silent.
+
+## F-04 — Low: liboqs reports a failed signing only as a bare status code, with no reason
+
+**Observed.** Signing with a 300-byte context via
+`OQS_SIG_sign_with_ctx_str` fails with `ERROR sign failed status -1`
+and no further detail, although the underlying cause is a specific,
+checkable condition: FIPS 204 limits the context string to 255 bytes,
+and ml-dsa-native&#x27;s `mld_prepare_domain_separation_prefix` returns
+failure for `ctxlen &gt; 255`. The caller cannot distinguish &quot;context too
+long&quot; from any other signing failure without reading the library
+source (`outputs/run1/benchmark-run.log`, `ADV` lines:
+`liboqs_ctx_300B = refused_sign_failed`).
+
+**Why it matters.** In a deployment, a bare failure code forces the
+operator to guess which input was at fault; the correct behaviour
+(rejecting the over-long context) is indistinguishable from a
+malfunction. Low severity: the operation is correctly refused.
+
+## F-05 — Low: pure-Python implementations are two to three orders of magnitude slower than liboqs
+
+**Observed.** Median per-operation times (run1,
+`outputs/run1/results.json`, `throughput_ms_median`): liboqs ML-KEM
+operations complete in well under 0.1 ms, while kyber-py takes on the
+order of 1–10 ms; liboqs ML-DSA sign/verify complete in well under
+0.2 ms, while dilithium-py takes on the order of 100–500 ms per sign.
+Exact medians are in `evidence.json`. The ratio, not the absolute
+value, is the finding: the same algorithms, the same parameter sets,
+two to three orders of magnitude apart.
+
+**Why it matters.** The Python implementations state in their own
+documentation that they are educational, not constant-time and not
+written for performance. Quoting their timings as algorithm performance
+would be wrong, and a Python-only deployment would need to budget for
+these costs (for example, dilithium-py ML-DSA-87 signing at n=10 in
+this harness). Low severity: a performance property, not a correctness
+one; the implementations are correct, just slow.
+
+## F-06 — Low (verified behaviour, no weakness): flipped or zero ML-KEM ciphertexts decapsulate to a different 32-byte secret
+
+**Observed.** For every parameter set and both KEM implementations, a
+ciphertext with one flipped byte, or an all-zero ciphertext,
+decapsulates to a 32-byte secret that differs from the valid shared
+secret — no error is signalled
+(`outputs/run1/benchmark-run.log`, `ADV` lines:
+`liboqs_flipped_ct = returns_32B_different_secret`,
+`liboqs_zero_ct = returns_32B_different_secret`,
+`kyber_flipped_ct = returns_32B_different_secret`,
+`kyber_zero_ct = returns_32B_different_secret`).
+
+**Why it matters.** This is FIPS 203 implicit rejection working as
+specified: decapsulation never signals failure, it returns the
+fallback secret. A caller must compare the resulting secret (or the
+authenticated data it protects) and must never treat &quot;decapsulation
+returned 32 bytes&quot; as proof the ciphertext was genuine. Recorded here
+as a verified behaviour of the adversarial matrix, not as a weakness,
+and not as a re-assessment of implicit rejection (which was the subject
+of the earlier ML-KEM work).
+
+## F-07 — Low (verified behaviour, no weakness): cross-implementation agreement holds for all six parameter sets
+
+**Observed.** liboqs encapsulations decapsulate correctly under kyber-py
+and vice versa for ML-KEM-512/768/1024; liboqs signatures verify under
+dilithium-py and vice versa for ML-DSA-44/65/87 — including deterministic
+dilithium-py signatures, which liboqs accepts as valid (see F-01 for
+why that acceptance is a problem, not a reassurance)
+(`outputs/run1/benchmark-run.log`, `XIMPL` lines; all `True`).
+
+**Why it matters.** Interoperability between the C and Python
+implementations is confirmed end to end, which is what makes the F-01
+observation strong: the deterministic signature is not a quirk of one
+library&#x27;s verifier — it is a standard-conforming signature that every
+verifier accepts.
+</pre>
+
+<h2>Claim-to-evidence index</h2>
+<pre># Claims — claim-to-evidence index
+
+Every claim maps to the script that produces it and the output file that
+proves it. Timing values are medians from `outputs/run1/`; they vary
+between runs by design (see README.md, comparison rule), so claims about
+timing are stated as orders of magnitude, with exact medians in
+`outputs/run1/results.json` and `evidence.json`.
+
+| ID | Claim | Evidence |
+|----|-------|----------|
+| C-01 | liboqs 0.16.0, kyber-py 1.2.0 and dilithium-py 1.5.1 were benchmarked on ML-KEM-512/768/1024 and ML-DSA-44/65/87. | `src/benchmark.py`, `outputs/run1/benchmark-run.log` (TIMING lines), `outputs/run1/results.json` (`throughput`, `implementations`) |
+| C-02 | Rust and Go were not benchmarked: this machine has no cargo/rustc or Go toolchain. | `outputs/run1/results.json` (`implementations.rust`, `implementations.go`); `which cargo go` returns nothing (recorded in the run report) |
+| C-03 | All key, ciphertext and signature sizes match FIPS 203 Table 2 and FIPS 204 Table 2 for all six parameter sets, in all three implementations. | `src/benchmark.py` (SIZE section), `outputs/run1/benchmark-run.log` (SIZE lines, all `match=True`), `fixtures/test-vectors.json` |
+| C-04 | liboqs ML-KEM/ML-DSA operations are roughly two orders of magnitude faster than the pure-Python implementations; dilithium-py signing is the slowest operation measured. | `outputs/run1/results.json` (`throughput_ms_median`), `evidence.json` (`throughput_ms_median`); exact medians in the run files |
+| C-05 | liboqs ML-DSA signing is hedged: signing the same message twice under the same key yields different signatures. | `src/pq_driver.c` (`sig-sign-twice`), `outputs/run1/benchmark-run.log` (DET lines, `liboqs_sign_twice_identical=no`); ml-dsa-native source `src/liboqs-0.16.0/src/sig/ml_dsa/mldsa-native_ml-dsa-44_ref/mldsa/src/sign.c` (`mld_sign_signature` draws `rnd` with `mld_randombytes`) |
+| C-06 | dilithium-py default ML-DSA signing is hedged: signing the same message twice yields different signatures. | `outputs/run1/benchmark-run.log` (DET lines, `dilithium_hedged_identical=False`); `dilithium_py/ml_dsa/ml_dsa.py` `sign()` draws `rnd` from `self.random_bytes` unless `deterministic=True` |
+| C-07 | dilithium-py `deterministic=True` signing yields byte-identical signatures for repeated signings of the same message, for ML-DSA-44/65/87. | `remediation/reproduce_weakness.py`, `outputs/run1/remediation-before.log` (`identical: True`); `outputs/run1/benchmark-run.log` (DET lines, `dilithium_deterministic_identical=True`) |
+| C-08 | A deterministic dilithium-py signature verifies under liboqs 0.16.0 and under dilithium-py — no verifier can distinguish it from a hedged signature. | `remediation/reproduce_weakness.py` (cross-implementation verify), `outputs/run1/remediation-before.log` (`verify deterministic sig1 (liboqs 0.16.0): VALID`); `outputs/run1/benchmark-run.log` (XIMPL lines, `sig_deterministic_dilithium_sign_liboqs_verify=True`) |
+| C-09 | The hedged-signing wrapper makes repeated signings differ, keeps signatures verifiable under both implementations, refuses deterministic mode without an explicit opt-in, and the patch applies cleanly. | `remediation/hedged_sign.py`, `remediation/remediation.patch`, `remediation/test_remediation.py`, `outputs/run1/remediation-after.log` (all PASS, `0 failed`) |
+| C-10 | Flipped-byte and all-zero ML-KEM ciphertexts decapsulate to a different 32-byte secret in both KEM implementations (implicit rejection); truncated, oversized and wrong-parameter-set inputs are refused. | `outputs/run1/benchmark-run.log` (ADV lines for ML-KEM-512/768/1024: `flipped_ct`, `zero_ct`, `truncated_ct`, `oversized_ct`, `wrong_param_dk`) |
+| C-11 | Flipped signatures, wrong messages and wrong contexts fail ML-DSA verification in both implementations; truncated signatures, wrong-parameter-set keys and 300-byte contexts are refused. | `outputs/run1/benchmark-run.log` (ADV lines for ML-DSA-44/65/87: `flipped_sig`, `wrong_msg`, `wrong_ctx`, `truncated_sig`, `cross_param`, `ctx_300B`) |
+| C-12 | Cross-implementation agreement holds in both directions for all six parameter sets (liboqs &lt;-&gt; kyber-py KEM; liboqs &lt;-&gt; dilithium-py signatures). | `outputs/run1/benchmark-run.log` (XIMPL lines, all `True`); `outputs/run1/results.json` (`cross_implementation`) |
+| C-13 | A clean re-run from a fresh copy reproduces every deterministic field (sizes, adversarial outcomes, cross-implementation outcomes, determinism booleans, remediation verdicts). | `scripts/clean_reproduce.sh`, `outputs/run2-clean/benchmark-run.log`, `outputs/run-comparison.log` (final line `MATCH`) |
+| C-14 | Every shippable pack file matches its recorded SHA-256 digest. | `SHA256SUMS`, `scripts/verify_digests.sh` (all OK) |
+</pre>
+
+<h2>Reproduce</h2>
+<pre>bash scripts/run_all.sh            # full rebuild + benchmark into outputs/run1/
+bash scripts/clean_reproduce.sh    # fresh-copy re-run into outputs/run2-clean/ + comparison
+bash scripts/verify_digests.sh     # SHA-256 check over all shippable files</pre>
+<p>Sources: FIPS 203 and FIPS 204 (bundled as src/FIPS.203.pdf and
+src/FIPS.204.pdf); liboqs 0.16.0; kyber-py 1.2.0; dilithium-py 1.5.1.
+Full citations in citations.md.</p>
+</body></html>
