@@ -1,0 +1,24 @@
+# Claims — claim-to-evidence index
+
+Every claim maps to the script that produces it and the output file that
+proves it. Timing values are medians from `outputs/run1/`; they vary
+between runs by design (see README.md, comparison rule), so claims about
+timing are stated as orders of magnitude, with exact medians in
+`outputs/run1/results.json` and `evidence.json`.
+
+| ID | Claim | Evidence |
+|----|-------|----------|
+| C-01 | liboqs 0.16.0, kyber-py 1.2.0 and dilithium-py 1.5.1 were benchmarked on ML-KEM-512/768/1024 and ML-DSA-44/65/87. | `src/benchmark.py`, `outputs/run1/benchmark-run.log` (TIMING lines), `outputs/run1/results.json` (`throughput`, `implementations`) |
+| C-02 | Rust and Go were not benchmarked: this machine has no cargo/rustc or Go toolchain. | `outputs/run1/results.json` (`implementations.rust`, `implementations.go`); `which cargo go` returns nothing (recorded in the run report) |
+| C-03 | All key, ciphertext and signature sizes match FIPS 203 Table 2 and FIPS 204 Table 2 for all six parameter sets, in all three implementations. | `src/benchmark.py` (SIZE section), `outputs/run1/benchmark-run.log` (SIZE lines, all `match=True`), `fixtures/test-vectors.json` |
+| C-04 | liboqs ML-KEM/ML-DSA operations are roughly two orders of magnitude faster than the pure-Python implementations; dilithium-py signing is the slowest operation measured. | `outputs/run1/results.json` (`throughput_ms_median`), `evidence.json` (`throughput_ms_median`); exact medians in the run files |
+| C-05 | liboqs ML-DSA signing is hedged: signing the same message twice under the same key yields different signatures. | `src/pq_driver.c` (`sig-sign-twice`), `outputs/run1/benchmark-run.log` (DET lines, `liboqs_sign_twice_identical=no`); ml-dsa-native source `src/liboqs-0.16.0/src/sig/ml_dsa/mldsa-native_ml-dsa-44_ref/mldsa/src/sign.c` (`mld_sign_signature` draws `rnd` with `mld_randombytes`) |
+| C-06 | dilithium-py default ML-DSA signing is hedged: signing the same message twice yields different signatures. | `outputs/run1/benchmark-run.log` (DET lines, `dilithium_hedged_identical=False`); `dilithium_py/ml_dsa/ml_dsa.py` `sign()` draws `rnd` from `self.random_bytes` unless `deterministic=True` |
+| C-07 | dilithium-py `deterministic=True` signing yields byte-identical signatures for repeated signings of the same message, for ML-DSA-44/65/87. | `remediation/reproduce_weakness.py`, `outputs/run1/remediation-before.log` (`identical: True`); `outputs/run1/benchmark-run.log` (DET lines, `dilithium_deterministic_identical=True`) |
+| C-08 | A deterministic dilithium-py signature verifies under liboqs 0.16.0 and under dilithium-py — no verifier can distinguish it from a hedged signature. | `remediation/reproduce_weakness.py` (cross-implementation verify), `outputs/run1/remediation-before.log` (`verify deterministic sig1 (liboqs 0.16.0): VALID`); `outputs/run1/benchmark-run.log` (XIMPL lines, `sig_deterministic_dilithium_sign_liboqs_verify=True`) |
+| C-09 | The hedged-signing wrapper makes repeated signings differ, keeps signatures verifiable under both implementations, refuses deterministic mode without an explicit opt-in, and the patch applies cleanly. | `remediation/hedged_sign.py`, `remediation/remediation.patch`, `remediation/test_remediation.py`, `outputs/run1/remediation-after.log` (all PASS, `0 failed`) |
+| C-10 | Flipped-byte and all-zero ML-KEM ciphertexts decapsulate to a different 32-byte secret in both KEM implementations (implicit rejection); truncated, oversized and wrong-parameter-set inputs are refused. | `outputs/run1/benchmark-run.log` (ADV lines for ML-KEM-512/768/1024: `flipped_ct`, `zero_ct`, `truncated_ct`, `oversized_ct`, `wrong_param_dk`) |
+| C-11 | Flipped signatures, wrong messages and wrong contexts fail ML-DSA verification in both implementations; truncated signatures are refused by the liboqs driver length check and return False under dilithium-py; wrong-parameter-set keys and 300-byte contexts are refused. | `outputs/run1/benchmark-run.log` (ADV lines for ML-DSA-44/65/87: `flipped_sig`, `wrong_msg`, `wrong_ctx`, `truncated_sig`, `cross_param`, `ctx_300B`) |
+| C-12 | Cross-implementation agreement holds in both directions for all six parameter sets (liboqs <-> kyber-py KEM; liboqs <-> dilithium-py signatures). | `outputs/run1/benchmark-run.log` (XIMPL lines, all `True`); `outputs/run1/results.json` (`cross_implementation`) |
+| C-13 | A clean re-run from a fresh copy reproduces every deterministic field (sizes, adversarial outcomes, cross-implementation outcomes, determinism booleans, remediation verdicts). | `scripts/clean_reproduce.sh`, `outputs/run2-clean/benchmark-run.log`, `outputs/run-comparison.log` (final line `MATCH`) |
+| C-14 | Every shippable pack file matches its recorded SHA-256 digest. | `SHA256SUMS`, `scripts/verify_digests.sh` (all OK) |
