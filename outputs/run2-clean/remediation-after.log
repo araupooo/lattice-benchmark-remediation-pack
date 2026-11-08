@@ -1,0 +1,14 @@
+=== BEFORE (weakness): direct deterministic signing ===
+PASS before_deterministic_signatures_identical — the weakness reproduces: identical signatures, both valid
+PASS before_deterministic_signatures_verify
+=== AFTER (remediation): hedged_sign wrapper ===
+PASS after_hedged_signatures_differ
+PASS after_hedged_signatures_verify_dilithium
+PASS after_hedged_signatures_verify_liboqs
+PASS after_deterministic_without_optin_refused
+PASS after_deterministic_with_optin_works_and_warns — WARNING: deterministic ML-DSA signing used (reason: test vector)
+PASS after_patch_applies_cleanly — checking file vulnerable_caller.py
+PASS after_patch_applied
+PASS after_patched_caller_signatures_differ — OK: hedged signatures — repeated signings differ.
+PASS after_repeat_signature_tripwire
+=== regression test: 11 passed, 0 failed ===

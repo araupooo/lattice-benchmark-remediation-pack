@@ -1,0 +1,23 @@
+implementation: dilithium-py 1.5.1, ML-DSA-44 (FIPS 204)
+public key sha256:  ee257d85cc3152f4422d5e865091c52dece2136a8feb72fee0819a48dca8d642
+message: b'lattice benchmark remediation pack test message'
+
+--- hedged (default) signing, same key + message, twice ---
+signature 1 sha256: 99f23f62a0f368b88b4047fab9b0fa028ab4bd1f6e798637f896b9d704964c42
+signature 2 sha256: ea575c2b8c83cf2d2e1e0e585302f2ae7872d523b1565d212c2fb68feced5780
+identical: False
+verify sig1 (dilithium-py): True
+verify sig2 (dilithium-py): True
+
+--- deterministic signing (deterministic=True), same key + message, twice ---
+signature 1 sha256: 47dfb88dc26e506950cc342d62bf4bbc21d7ac4e2187e3e93a7399047165e9bf
+signature 2 sha256: 47dfb88dc26e506950cc342d62bf4bbc21d7ac4e2187e3e93a7399047165e9bf
+identical: True
+verify sig1 (dilithium-py): True
+verify sig2 (dilithium-py): True
+verify deterministic sig1 (liboqs 0.16.0): VALID
+verify hedged sig1 (liboqs 0.16.0): VALID
+
+REPRODUCED: deterministic=True yields byte-identical, fully valid
+signatures; a verifier cannot distinguish them from hedged ones.
+The FIPS 204 randomized-signing hedge is silently dropped.

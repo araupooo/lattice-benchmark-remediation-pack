@@ -1,0 +1,367 @@
+{
+  "adversarial": {
+    "ML-DSA-44": {
+      "dilithium_cross_param": "refused_ValueError",
+      "dilithium_ctx_300B": "refused_ValueError",
+      "dilithium_flipped_sig": false,
+      "dilithium_truncated_sig": "returns_False",
+      "dilithium_valid": true,
+      "dilithium_wrong_ctx": false,
+      "dilithium_wrong_msg": false,
+      "liboqs_cross_param": "refused_length_check",
+      "liboqs_ctx_300B": "refused_sign_failed",
+      "liboqs_flipped_sig": "INVALID",
+      "liboqs_truncated_sig": "refused_length_check",
+      "liboqs_valid": true,
+      "liboqs_wrong_ctx": "INVALID",
+      "liboqs_wrong_msg": "INVALID"
+    },
+    "ML-DSA-65": {
+      "dilithium_cross_param": "refused_ValueError",
+      "dilithium_ctx_300B": "refused_ValueError",
+      "dilithium_flipped_sig": false,
+      "dilithium_truncated_sig": "returns_False",
+      "dilithium_valid": true,
+      "dilithium_wrong_ctx": false,
+      "dilithium_wrong_msg": false,
+      "liboqs_cross_param": "refused_length_check",
+      "liboqs_ctx_300B": "refused_sign_failed",
+      "liboqs_flipped_sig": "INVALID",
+      "liboqs_truncated_sig": "refused_length_check",
+      "liboqs_valid": true,
+      "liboqs_wrong_ctx": "INVALID",
+      "liboqs_wrong_msg": "INVALID"
+    },
+    "ML-DSA-87": {
+      "dilithium_cross_param": "refused_ValueError",
+      "dilithium_ctx_300B": "refused_ValueError",
+      "dilithium_flipped_sig": false,
+      "dilithium_truncated_sig": "returns_False",
+      "dilithium_valid": true,
+      "dilithium_wrong_ctx": false,
+      "dilithium_wrong_msg": false,
+      "liboqs_cross_param": "refused_length_check",
+      "liboqs_ctx_300B": "refused_sign_failed",
+      "liboqs_flipped_sig": "INVALID",
+      "liboqs_truncated_sig": "refused_length_check",
+      "liboqs_valid": true,
+      "liboqs_wrong_ctx": "INVALID",
+      "liboqs_wrong_msg": "INVALID"
+    },
+    "ML-KEM-1024": {
+      "kyber_flipped_ct": "returns_32B_different_secret",
+      "kyber_oversized_ct": "refused_ValueError",
+      "kyber_truncated_ct": "refused_ValueError",
+      "kyber_valid_roundtrip": true,
+      "kyber_wrong_param_dk": "refused_ValueError",
+      "kyber_zero_ct": "returns_32B_different_secret",
+      "liboqs_flipped_ct": "returns_32B_different_secret",
+      "liboqs_oversized_ct": "refused_length_check",
+      "liboqs_truncated_ct": "refused_length_check",
+      "liboqs_valid_roundtrip": true,
+      "liboqs_wrong_param_dk": "refused_length_check",
+      "liboqs_zero_ct": "returns_32B_different_secret"
+    },
+    "ML-KEM-512": {
+      "kyber_flipped_ct": "returns_32B_different_secret",
+      "kyber_oversized_ct": "refused_ValueError",
+      "kyber_truncated_ct": "refused_ValueError",
+      "kyber_valid_roundtrip": true,
+      "kyber_wrong_param_dk": "refused_ValueError",
+      "kyber_zero_ct": "returns_32B_different_secret",
+      "liboqs_flipped_ct": "returns_32B_different_secret",
+      "liboqs_oversized_ct": "refused_length_check",
+      "liboqs_truncated_ct": "refused_length_check",
+      "liboqs_valid_roundtrip": true,
+      "liboqs_wrong_param_dk": "refused_length_check",
+      "liboqs_zero_ct": "returns_32B_different_secret"
+    },
+    "ML-KEM-768": {
+      "kyber_flipped_ct": "returns_32B_different_secret",
+      "kyber_oversized_ct": "refused_ValueError",
+      "kyber_truncated_ct": "refused_ValueError",
+      "kyber_valid_roundtrip": true,
+      "kyber_wrong_param_dk": "refused_ValueError",
+      "kyber_zero_ct": "returns_32B_different_secret",
+      "liboqs_flipped_ct": "returns_32B_different_secret",
+      "liboqs_oversized_ct": "refused_length_check",
+      "liboqs_truncated_ct": "refused_length_check",
+      "liboqs_valid_roundtrip": true,
+      "liboqs_wrong_param_dk": "refused_length_check",
+      "liboqs_zero_ct": "returns_32B_different_secret"
+    }
+  },
+  "cross_implementation": {
+    "ML-DSA-44": {
+      "sig_deterministic_dilithium_sign_liboqs_verify": true,
+      "sig_dilithium_sign_liboqs_verify": true,
+      "sig_liboqs_sign_dilithium_verify": true
+    },
+    "ML-DSA-65": {
+      "sig_deterministic_dilithium_sign_liboqs_verify": true,
+      "sig_dilithium_sign_liboqs_verify": true,
+      "sig_liboqs_sign_dilithium_verify": true
+    },
+    "ML-DSA-87": {
+      "sig_deterministic_dilithium_sign_liboqs_verify": true,
+      "sig_dilithium_sign_liboqs_verify": true,
+      "sig_liboqs_sign_dilithium_verify": true
+    },
+    "ML-KEM-1024": {
+      "kem_kyber_encaps_liboqs_decaps": true,
+      "kem_liboqs_encaps_kyber_decaps": true
+    },
+    "ML-KEM-512": {
+      "kem_kyber_encaps_liboqs_decaps": true,
+      "kem_liboqs_encaps_kyber_decaps": true
+    },
+    "ML-KEM-768": {
+      "kem_kyber_encaps_liboqs_decaps": true,
+      "kem_liboqs_encaps_kyber_decaps": true
+    }
+  },
+  "determinism": {
+    "ML-DSA-44": {
+      "dilithium_deterministic_sig_sha256": "a951d7dce05bd7baecaea3a197202dda316cdd2b1d64d90028f4547bf75a6dc3",
+      "dilithium_deterministic_sign_twice_identical": true,
+      "dilithium_hedged_sig1_sha256": "d48a26af3adcd7e41d5a54026e50c82d75d8438151288ad02c226c2556dc87af",
+      "dilithium_hedged_sign_twice_identical": false,
+      "liboqs_hedged_sign_twice_identical": "no"
+    },
+    "ML-DSA-65": {
+      "dilithium_deterministic_sig_sha256": "63d61fe762b9050de1f15c66b12e914ee03b544c7bac566e0e45d0af5ee016c7",
+      "dilithium_deterministic_sign_twice_identical": true,
+      "dilithium_hedged_sig1_sha256": "dbd4ffb50a0a28d171e11c04183a2a42a8c54857dea11677d705530b79899005",
+      "dilithium_hedged_sign_twice_identical": false,
+      "liboqs_hedged_sign_twice_identical": "no"
+    },
+    "ML-DSA-87": {
+      "dilithium_deterministic_sig_sha256": "27f11a751fc48d6f7b348b3ac4083d56e759057dfc58419a927b360820cf849f",
+      "dilithium_deterministic_sign_twice_identical": true,
+      "dilithium_hedged_sig1_sha256": "d5d79c547d14cfc071aec6dcc0c9c2f9d28aa35dba88c85dfca0b4a5a4c55f9f",
+      "dilithium_hedged_sign_twice_identical": false,
+      "liboqs_hedged_sign_twice_identical": "no"
+    },
+    "ML-KEM-768": {
+      "kyber_encaps_twice_identical_ct": false,
+      "kyber_encaps_twice_identical_ss": false
+    }
+  },
+  "implementations": {
+    "dilithium-py": "1.5.1 (pure Python, FIPS 204 ML-DSA)",
+    "go": "NOT RUN \u2014 no Go toolchain on this machine",
+    "kyber-py": "1.2.0 (pure Python, FIPS 203 ML-KEM)",
+    "liboqs": "0.16.0 (C, mlkem-native / ml-dsa-native backends)",
+    "rust": "NOT RUN \u2014 no cargo/rustc toolchain on this machine"
+  },
+  "memory_kb": {
+    "ML-DSA-44": {
+      "dilithium-py": 20008,
+      "liboqs": 6000
+    },
+    "ML-DSA-65": {
+      "dilithium-py": 20304,
+      "liboqs": 6052
+    },
+    "ML-DSA-87": {
+      "dilithium-py": 21136,
+      "liboqs": 5924
+    },
+    "ML-KEM-1024": {
+      "kyber-py": 19332,
+      "liboqs": 6112
+    },
+    "ML-KEM-512": {
+      "kyber-py": 19384,
+      "liboqs": 5912
+    },
+    "ML-KEM-768": {
+      "kyber-py": 19320,
+      "liboqs": 5816
+    }
+  },
+  "sizes_verified": {
+    "ML-DSA-44": {
+      "expected": {
+        "pk": 1312,
+        "sig": 2420,
+        "sk": 2560
+      },
+      "liboqs": {
+        "pk": 1312,
+        "sig": 2420,
+        "sk": 2560
+      },
+      "match": true
+    },
+    "ML-DSA-65": {
+      "expected": {
+        "pk": 1952,
+        "sig": 3309,
+        "sk": 4032
+      },
+      "liboqs": {
+        "pk": 1952,
+        "sig": 3309,
+        "sk": 4032
+      },
+      "match": true
+    },
+    "ML-DSA-87": {
+      "expected": {
+        "pk": 2592,
+        "sig": 4627,
+        "sk": 4896
+      },
+      "liboqs": {
+        "pk": 2592,
+        "sig": 4627,
+        "sk": 4896
+      },
+      "match": true
+    },
+    "ML-KEM-1024": {
+      "expected": {
+        "ct": 1568,
+        "dk": 3168,
+        "ek": 1568,
+        "ss": 32
+      },
+      "liboqs": {
+        "ct": 1568,
+        "dk": 3168,
+        "ek": 1568,
+        "ss": 32
+      },
+      "match": true
+    },
+    "ML-KEM-512": {
+      "expected": {
+        "ct": 768,
+        "dk": 1632,
+        "ek": 800,
+        "ss": 32
+      },
+      "liboqs": {
+        "ct": 768,
+        "dk": 1632,
+        "ek": 800,
+        "ss": 32
+      },
+      "match": true
+    },
+    "ML-KEM-768": {
+      "expected": {
+        "ct": 1088,
+        "dk": 2400,
+        "ek": 1184,
+        "ss": 32
+      },
+      "liboqs": {
+        "ct": 1088,
+        "dk": 2400,
+        "ek": 1184,
+        "ss": 32
+      },
+      "match": true
+    }
+  },
+  "throughput": {
+    "ML-DSA-44": {
+      "dilithium-py": {
+        "keygen": 16.916669,
+        "n": 10,
+        "roundtrip_ok": true,
+        "sign": 71.21916,
+        "verify": 20.171656
+      },
+      "liboqs": {
+        "keygen_ms_median": 0.057443,
+        "n": 100,
+        "sign_ms_median": 0.132126,
+        "verify_ms_median": 0.058042,
+        "verify_ok": "100/100"
+      }
+    },
+    "ML-DSA-65": {
+      "dilithium-py": {
+        "keygen": 27.596693,
+        "n": 10,
+        "roundtrip_ok": true,
+        "sign": 129.757231,
+        "verify": 31.504579
+      },
+      "liboqs": {
+        "keygen_ms_median": 0.098616,
+        "n": 100,
+        "sign_ms_median": 0.217543,
+        "verify_ms_median": 0.095041,
+        "verify_ok": "100/100"
+      }
+    },
+    "ML-DSA-87": {
+      "dilithium-py": {
+        "keygen": 42.704644,
+        "n": 10,
+        "roundtrip_ok": true,
+        "sign": 179.370659,
+        "verify": 48.914226
+      },
+      "liboqs": {
+        "keygen_ms_median": 0.150177,
+        "n": 100,
+        "sign_ms_median": 0.315106,
+        "verify_ms_median": 0.14527,
+        "verify_ok": "100/100"
+      }
+    },
+    "ML-KEM-1024": {
+      "kyber-py": {
+        "decaps": 23.176149,
+        "encaps": 17.982482,
+        "keygen": 14.107786,
+        "n": 100,
+        "roundtrip_ok": true
+      },
+      "liboqs": {
+        "decaps_ms_median": 0.050738,
+        "encaps_ms_median": 0.042774,
+        "keygen_ms_median": 0.061574,
+        "n": 200,
+        "roundtrip_ok": "200/200"
+      }
+    },
+    "ML-KEM-512": {
+      "kyber-py": {
+        "decaps": 11.125601,
+        "encaps": 8.178607,
+        "keygen": 5.394653,
+        "n": 100,
+        "roundtrip_ok": true
+      },
+      "liboqs": {
+        "decaps_ms_median": 0.023375,
+        "encaps_ms_median": 0.020902,
+        "keygen_ms_median": 0.018859,
+        "n": 200,
+        "roundtrip_ok": "200/200"
+      }
+    },
+    "ML-KEM-768": {
+      "kyber-py": {
+        "decaps": 16.826706,
+        "encaps": 12.69494,
+        "keygen": 9.187003,
+        "n": 100,
+        "roundtrip_ok": true
+      },
+      "liboqs": {
+        "decaps_ms_median": 0.03694,
+        "encaps_ms_median": 0.031608,
+        "keygen_ms_median": 0.029772,
+        "n": 200,
+        "roundtrip_ok": "200/200"
+      }
+    }
+  }
+}
