@@ -1,0 +1,188 @@
+=== lattice benchmark + remediation pack: run2-clean ===
+date (UTC): 2026-11-08T20:54:53Z
+src/liboqs-0.16.0.tar.gz: OK
+src/kyber_py-1.2.0-py3-none-any.whl: OK
+src/dilithium_py-1.5.1-py3-none-any.whl: OK
+src/FIPS.203.pdf: OK
+src/FIPS.204.pdf: OK
+extracting liboqs 0.16.0 ...
+configuring liboqs (ML-KEM + ML-DSA only) ...
+building liboqs ...
+-rw-rw---- 1 root nogroup 1667906 Nov  8 20:56 src/liboqs-build/lib/liboqs.a
+compiling liboqs driver ...
+creating venv and installing kyber-py + dilithium-py from bundled wheels ...
+kyber-py 1.2.0 | dilithium-py 1.5.1
+running benchmark harness -> outputs/run2-clean ...
+=== lattice benchmark + adversarial harness ===
+driver: src/pq_driver
+python: venv/bin/python
+test message: 'lattice benchmark remediation pack test message'
+--- sizes (FIPS 203 Table 2 / FIPS 204 Table 2) ---
+SIZE ML-KEM-512 liboqs={'ek': 800, 'dk': 1632, 'ct': 768, 'ss': 32} expected={'ek': 800, 'dk': 1632, 'ct': 768, 'ss': 32} match=True
+SIZE ML-KEM-768 liboqs={'ek': 1184, 'dk': 2400, 'ct': 1088, 'ss': 32} expected={'ek': 1184, 'dk': 2400, 'ct': 1088, 'ss': 32} match=True
+SIZE ML-KEM-1024 liboqs={'ek': 1568, 'dk': 3168, 'ct': 1568, 'ss': 32} expected={'ek': 1568, 'dk': 3168, 'ct': 1568, 'ss': 32} match=True
+SIZE ML-DSA-44 liboqs={'pk': 1312, 'sk': 2560, 'sig': 2420} expected={'pk': 1312, 'sk': 2560, 'sig': 2420} match=True
+SIZE ML-DSA-65 liboqs={'pk': 1952, 'sk': 4032, 'sig': 3309} expected={'pk': 1952, 'sk': 4032, 'sig': 3309} match=True
+SIZE ML-DSA-87 liboqs={'pk': 2592, 'sk': 4896, 'sig': 4627} expected={'pk': 2592, 'sk': 4896, 'sig': 4627} match=True
+SIZE ML-KEM-512 kyber-py={'ek': 800, 'dk': 1632, 'ct': 768, 'ss': 32} match=True
+SIZE ML-KEM-768 kyber-py={'ek': 1184, 'dk': 2400, 'ct': 1088, 'ss': 32} match=True
+SIZE ML-KEM-1024 kyber-py={'ek': 1568, 'dk': 3168, 'ct': 1568, 'ss': 32} match=True
+SIZE ML-DSA-44 dilithium-py={'pk': 1312, 'sk': 2560, 'sig': 2420} match=True
+SIZE ML-DSA-65 dilithium-py={'pk': 1952, 'sk': 4032, 'sig': 3309} match=True
+SIZE ML-DSA-87 dilithium-py={'pk': 2592, 'sk': 4896, 'sig': 4627} match=True
+--- throughput: liboqs (C) ---
+TIMING liboqs ML-KEM-512 n=200 keygen=0.018859ms encaps=0.020902ms decaps=0.023375ms roundtrip=200/200 peak_rss_kb=5912
+TIMING liboqs ML-KEM-768 n=200 keygen=0.029772ms encaps=0.031608ms decaps=0.036940ms roundtrip=200/200 peak_rss_kb=5816
+TIMING liboqs ML-KEM-1024 n=200 keygen=0.061574ms encaps=0.042774ms decaps=0.050738ms roundtrip=200/200 peak_rss_kb=6112
+TIMING liboqs ML-DSA-44 n=100 keygen=0.057443ms sign=0.132126ms verify=0.058042ms verify_ok=100/100 peak_rss_kb=6000
+TIMING liboqs ML-DSA-65 n=100 keygen=0.098616ms sign=0.217543ms verify=0.095041ms verify_ok=100/100 peak_rss_kb=6052
+TIMING liboqs ML-DSA-87 n=100 keygen=0.150177ms sign=0.315106ms verify=0.145270ms verify_ok=100/100 peak_rss_kb=5924
+--- throughput: kyber-py (pure Python) ---
+TIMING kyber-py ML-KEM-512 n=100 keygen=5.394653ms encaps=8.178607ms decaps=11.125601ms roundtrip_ok=True peak_rss_kb=19384
+TIMING kyber-py ML-KEM-768 n=100 keygen=9.187003ms encaps=12.69494ms decaps=16.826706ms roundtrip_ok=True peak_rss_kb=19320
+TIMING kyber-py ML-KEM-1024 n=100 keygen=14.107786ms encaps=17.982482ms decaps=23.176149ms roundtrip_ok=True peak_rss_kb=19332
+--- throughput: dilithium-py (pure Python) ---
+TIMING dilithium-py ML-DSA-44 n=10 keygen=16.916669ms sign=71.21916ms verify=20.171656ms roundtrip_ok=True peak_rss_kb=20008
+TIMING dilithium-py ML-DSA-65 n=10 keygen=27.596693ms sign=129.757231ms verify=31.504579ms roundtrip_ok=True peak_rss_kb=20304
+TIMING dilithium-py ML-DSA-87 n=10 keygen=42.704644ms sign=179.370659ms verify=48.914226ms roundtrip_ok=True peak_rss_kb=21136
+--- adversarial: ML-KEM ---
+ADV ML-KEM-512 liboqs_valid_roundtrip = True
+ADV ML-KEM-512 liboqs_flipped_ct = returns_32B_different_secret
+ADV ML-KEM-512 liboqs_zero_ct = returns_32B_different_secret
+ADV ML-KEM-512 liboqs_truncated_ct = refused_length_check
+ADV ML-KEM-512 liboqs_oversized_ct = refused_length_check
+ADV ML-KEM-512 liboqs_wrong_param_dk = refused_length_check
+ADV ML-KEM-512 kyber_valid_roundtrip = True
+ADV ML-KEM-512 kyber_flipped_ct = returns_32B_different_secret
+ADV ML-KEM-512 kyber_zero_ct = returns_32B_different_secret
+ADV ML-KEM-512 kyber_truncated_ct = refused_ValueError
+ADV ML-KEM-512 kyber_oversized_ct = refused_ValueError
+ADV ML-KEM-512 kyber_wrong_param_dk = refused_ValueError
+ADV ML-KEM-768 liboqs_valid_roundtrip = True
+ADV ML-KEM-768 liboqs_flipped_ct = returns_32B_different_secret
+ADV ML-KEM-768 liboqs_zero_ct = returns_32B_different_secret
+ADV ML-KEM-768 liboqs_truncated_ct = refused_length_check
+ADV ML-KEM-768 liboqs_oversized_ct = refused_length_check
+ADV ML-KEM-768 liboqs_wrong_param_dk = refused_length_check
+ADV ML-KEM-768 kyber_valid_roundtrip = True
+ADV ML-KEM-768 kyber_flipped_ct = returns_32B_different_secret
+ADV ML-KEM-768 kyber_zero_ct = returns_32B_different_secret
+ADV ML-KEM-768 kyber_truncated_ct = refused_ValueError
+ADV ML-KEM-768 kyber_oversized_ct = refused_ValueError
+ADV ML-KEM-768 kyber_wrong_param_dk = refused_ValueError
+ADV ML-KEM-1024 liboqs_valid_roundtrip = True
+ADV ML-KEM-1024 liboqs_flipped_ct = returns_32B_different_secret
+ADV ML-KEM-1024 liboqs_zero_ct = returns_32B_different_secret
+ADV ML-KEM-1024 liboqs_truncated_ct = refused_length_check
+ADV ML-KEM-1024 liboqs_oversized_ct = refused_length_check
+ADV ML-KEM-1024 liboqs_wrong_param_dk = refused_length_check
+ADV ML-KEM-1024 kyber_valid_roundtrip = True
+ADV ML-KEM-1024 kyber_flipped_ct = returns_32B_different_secret
+ADV ML-KEM-1024 kyber_zero_ct = returns_32B_different_secret
+ADV ML-KEM-1024 kyber_truncated_ct = refused_ValueError
+ADV ML-KEM-1024 kyber_oversized_ct = refused_ValueError
+ADV ML-KEM-1024 kyber_wrong_param_dk = refused_ValueError
+--- adversarial: ML-DSA ---
+ADV ML-DSA-44 liboqs_valid = True
+ADV ML-DSA-44 liboqs_flipped_sig = INVALID
+ADV ML-DSA-44 liboqs_wrong_msg = INVALID
+ADV ML-DSA-44 liboqs_wrong_ctx = INVALID
+ADV ML-DSA-44 liboqs_truncated_sig = refused_length_check
+ADV ML-DSA-44 liboqs_cross_param = refused_length_check
+ADV ML-DSA-44 liboqs_ctx_300B = refused_sign_failed
+ADV ML-DSA-44 dilithium_valid = True
+ADV ML-DSA-44 dilithium_flipped_sig = False
+ADV ML-DSA-44 dilithium_wrong_msg = False
+ADV ML-DSA-44 dilithium_wrong_ctx = False
+ADV ML-DSA-44 dilithium_truncated_sig = returns_False
+ADV ML-DSA-44 dilithium_cross_param = refused_ValueError
+ADV ML-DSA-44 dilithium_ctx_300B = refused_ValueError
+ADV ML-DSA-65 liboqs_valid = True
+ADV ML-DSA-65 liboqs_flipped_sig = INVALID
+ADV ML-DSA-65 liboqs_wrong_msg = INVALID
+ADV ML-DSA-65 liboqs_wrong_ctx = INVALID
+ADV ML-DSA-65 liboqs_truncated_sig = refused_length_check
+ADV ML-DSA-65 liboqs_cross_param = refused_length_check
+ADV ML-DSA-65 liboqs_ctx_300B = refused_sign_failed
+ADV ML-DSA-65 dilithium_valid = True
+ADV ML-DSA-65 dilithium_flipped_sig = False
+ADV ML-DSA-65 dilithium_wrong_msg = False
+ADV ML-DSA-65 dilithium_wrong_ctx = False
+ADV ML-DSA-65 dilithium_truncated_sig = returns_False
+ADV ML-DSA-65 dilithium_cross_param = refused_ValueError
+ADV ML-DSA-65 dilithium_ctx_300B = refused_ValueError
+ADV ML-DSA-87 liboqs_valid = True
+ADV ML-DSA-87 liboqs_flipped_sig = INVALID
+ADV ML-DSA-87 liboqs_wrong_msg = INVALID
+ADV ML-DSA-87 liboqs_wrong_ctx = INVALID
+ADV ML-DSA-87 liboqs_truncated_sig = refused_length_check
+ADV ML-DSA-87 liboqs_cross_param = refused_length_check
+ADV ML-DSA-87 liboqs_ctx_300B = refused_sign_failed
+ADV ML-DSA-87 dilithium_valid = True
+ADV ML-DSA-87 dilithium_flipped_sig = False
+ADV ML-DSA-87 dilithium_wrong_msg = False
+ADV ML-DSA-87 dilithium_wrong_ctx = False
+ADV ML-DSA-87 dilithium_truncated_sig = returns_False
+ADV ML-DSA-87 dilithium_cross_param = refused_ValueError
+ADV ML-DSA-87 dilithium_ctx_300B = refused_ValueError
+--- cross-implementation agreement ---
+XIMPL ML-KEM-512 liboqs-encaps/kyber-decaps=True kyber-encaps/liboqs-decaps=True
+XIMPL ML-KEM-768 liboqs-encaps/kyber-decaps=True kyber-encaps/liboqs-decaps=True
+XIMPL ML-KEM-1024 liboqs-encaps/kyber-decaps=True kyber-encaps/liboqs-decaps=True
+XIMPL ML-DSA-44 dilithium-sign/liboqs-verify=True liboqs-sign/dilithium-verify=True deterministic-dilithium-sign/liboqs-verify=True
+XIMPL ML-DSA-65 dilithium-sign/liboqs-verify=True liboqs-sign/dilithium-verify=True deterministic-dilithium-sign/liboqs-verify=True
+XIMPL ML-DSA-87 dilithium-sign/liboqs-verify=True liboqs-sign/dilithium-verify=True deterministic-dilithium-sign/liboqs-verify=True
+--- signing determinism (same key, same message, signed twice) ---
+DET ML-DSA-44 liboqs_sign_twice_identical=no dilithium_hedged_identical=False dilithium_deterministic_identical=True det_sig_sha256=a951d7dce05bd7ba...
+DET ML-DSA-65 liboqs_sign_twice_identical=no dilithium_hedged_identical=False dilithium_deterministic_identical=True det_sig_sha256=63d61fe762b9050d...
+DET ML-DSA-87 liboqs_sign_twice_identical=no dilithium_hedged_identical=False dilithium_deterministic_identical=True det_sig_sha256=27f11a751fc48d6f...
+DET ML-KEM-768 kyber-py encaps_twice identical ct=False ss=False
+=== done: results -> outputs/run2-clean/results.json ===
+reproducing the weakness -> outputs/run2-clean/remediation-before.log ...
+implementation: dilithium-py 1.5.1, ML-DSA-44 (FIPS 204)
+public key sha256:  ee257d85cc3152f4422d5e865091c52dece2136a8feb72fee0819a48dca8d642
+message: b'lattice benchmark remediation pack test message'
+
+--- hedged (default) signing, same key + message, twice ---
+signature 1 sha256: 99f23f62a0f368b88b4047fab9b0fa028ab4bd1f6e798637f896b9d704964c42
+signature 2 sha256: ea575c2b8c83cf2d2e1e0e585302f2ae7872d523b1565d212c2fb68feced5780
+identical: False
+verify sig1 (dilithium-py): True
+verify sig2 (dilithium-py): True
+
+--- deterministic signing (deterministic=True), same key + message, twice ---
+signature 1 sha256: 47dfb88dc26e506950cc342d62bf4bbc21d7ac4e2187e3e93a7399047165e9bf
+signature 2 sha256: 47dfb88dc26e506950cc342d62bf4bbc21d7ac4e2187e3e93a7399047165e9bf
+identical: True
+verify sig1 (dilithium-py): True
+verify sig2 (dilithium-py): True
+verify deterministic sig1 (liboqs 0.16.0): VALID
+verify hedged sig1 (liboqs 0.16.0): VALID
+
+REPRODUCED: deterministic=True yields byte-identical, fully valid
+signatures; a verifier cannot distinguish them from hedged ones.
+The FIPS 204 randomized-signing hedge is silently dropped.
+running remediation regression test -> outputs/run2-clean/remediation-after.log ...
+=== BEFORE (weakness): direct deterministic signing ===
+PASS before_deterministic_signatures_identical — the weakness reproduces: identical signatures, both valid
+PASS before_deterministic_signatures_verify
+=== AFTER (remediation): hedged_sign wrapper ===
+PASS after_hedged_signatures_differ
+PASS after_hedged_signatures_verify_dilithium
+PASS after_hedged_signatures_verify_liboqs
+PASS after_deterministic_without_optin_refused
+PASS after_deterministic_with_optin_works_and_warns — WARNING: deterministic ML-DSA signing used (reason: test vector)
+PASS after_patch_applies_cleanly — checking file vulnerable_caller.py
+PASS after_patch_applied
+PASS after_patched_caller_signatures_differ — OK: hedged signatures — repeated signings differ.
+PASS after_repeat_signature_tripwire
+=== regression test: 11 passed, 0 failed ===
+generating docs/index.html ...
+wrote docs/index.html
+generating evidence.json ...
+evidence.json written: 7 findings {'High': 0, 'Medium': 2, 'Low': 5}
+SHA256SUMS regenerated: 34 files
+=== done: run2-clean ===
+log:      outputs/run2-clean/benchmark-run.log
+results:  outputs/run2-clean/results.json
+evidence: evidence.json

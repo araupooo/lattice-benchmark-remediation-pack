@@ -1,0 +1,170 @@
+PASS sizes.ML-DSA-44.match
+PASS sizes.ML-DSA-65.match
+PASS sizes.ML-DSA-87.match
+PASS sizes.ML-KEM-1024.match
+PASS sizes.ML-KEM-512.match
+PASS sizes.ML-KEM-768.match
+PASS adversarial.ML-DSA-44.dilithium_cross_param
+PASS adversarial.ML-DSA-44.dilithium_ctx_300B
+PASS adversarial.ML-DSA-44.dilithium_flipped_sig
+PASS adversarial.ML-DSA-44.dilithium_truncated_sig
+PASS adversarial.ML-DSA-44.dilithium_valid
+PASS adversarial.ML-DSA-44.dilithium_wrong_ctx
+PASS adversarial.ML-DSA-44.dilithium_wrong_msg
+PASS adversarial.ML-DSA-44.liboqs_cross_param
+PASS adversarial.ML-DSA-44.liboqs_ctx_300B
+PASS adversarial.ML-DSA-44.liboqs_flipped_sig
+PASS adversarial.ML-DSA-44.liboqs_truncated_sig
+PASS adversarial.ML-DSA-44.liboqs_valid
+PASS adversarial.ML-DSA-44.liboqs_wrong_ctx
+PASS adversarial.ML-DSA-44.liboqs_wrong_msg
+PASS adversarial.ML-DSA-65.dilithium_cross_param
+PASS adversarial.ML-DSA-65.dilithium_ctx_300B
+PASS adversarial.ML-DSA-65.dilithium_flipped_sig
+PASS adversarial.ML-DSA-65.dilithium_truncated_sig
+PASS adversarial.ML-DSA-65.dilithium_valid
+PASS adversarial.ML-DSA-65.dilithium_wrong_ctx
+PASS adversarial.ML-DSA-65.dilithium_wrong_msg
+PASS adversarial.ML-DSA-65.liboqs_cross_param
+PASS adversarial.ML-DSA-65.liboqs_ctx_300B
+PASS adversarial.ML-DSA-65.liboqs_flipped_sig
+PASS adversarial.ML-DSA-65.liboqs_truncated_sig
+PASS adversarial.ML-DSA-65.liboqs_valid
+PASS adversarial.ML-DSA-65.liboqs_wrong_ctx
+PASS adversarial.ML-DSA-65.liboqs_wrong_msg
+PASS adversarial.ML-DSA-87.dilithium_cross_param
+PASS adversarial.ML-DSA-87.dilithium_ctx_300B
+PASS adversarial.ML-DSA-87.dilithium_flipped_sig
+PASS adversarial.ML-DSA-87.dilithium_truncated_sig
+PASS adversarial.ML-DSA-87.dilithium_valid
+PASS adversarial.ML-DSA-87.dilithium_wrong_ctx
+PASS adversarial.ML-DSA-87.dilithium_wrong_msg
+PASS adversarial.ML-DSA-87.liboqs_cross_param
+PASS adversarial.ML-DSA-87.liboqs_ctx_300B
+PASS adversarial.ML-DSA-87.liboqs_flipped_sig
+PASS adversarial.ML-DSA-87.liboqs_truncated_sig
+PASS adversarial.ML-DSA-87.liboqs_valid
+PASS adversarial.ML-DSA-87.liboqs_wrong_ctx
+PASS adversarial.ML-DSA-87.liboqs_wrong_msg
+PASS adversarial.ML-KEM-1024.kyber_flipped_ct
+PASS adversarial.ML-KEM-1024.kyber_oversized_ct
+PASS adversarial.ML-KEM-1024.kyber_truncated_ct
+PASS adversarial.ML-KEM-1024.kyber_valid_roundtrip
+PASS adversarial.ML-KEM-1024.kyber_wrong_param_dk
+PASS adversarial.ML-KEM-1024.kyber_zero_ct
+PASS adversarial.ML-KEM-1024.liboqs_flipped_ct
+PASS adversarial.ML-KEM-1024.liboqs_oversized_ct
+PASS adversarial.ML-KEM-1024.liboqs_truncated_ct
+PASS adversarial.ML-KEM-1024.liboqs_valid_roundtrip
+PASS adversarial.ML-KEM-1024.liboqs_wrong_param_dk
+PASS adversarial.ML-KEM-1024.liboqs_zero_ct
+PASS adversarial.ML-KEM-512.kyber_flipped_ct
+PASS adversarial.ML-KEM-512.kyber_oversized_ct
+PASS adversarial.ML-KEM-512.kyber_truncated_ct
+PASS adversarial.ML-KEM-512.kyber_valid_roundtrip
+PASS adversarial.ML-KEM-512.kyber_wrong_param_dk
+PASS adversarial.ML-KEM-512.kyber_zero_ct
+PASS adversarial.ML-KEM-512.liboqs_flipped_ct
+PASS adversarial.ML-KEM-512.liboqs_oversized_ct
+PASS adversarial.ML-KEM-512.liboqs_truncated_ct
+PASS adversarial.ML-KEM-512.liboqs_valid_roundtrip
+PASS adversarial.ML-KEM-512.liboqs_wrong_param_dk
+PASS adversarial.ML-KEM-512.liboqs_zero_ct
+PASS adversarial.ML-KEM-768.kyber_flipped_ct
+PASS adversarial.ML-KEM-768.kyber_oversized_ct
+PASS adversarial.ML-KEM-768.kyber_truncated_ct
+PASS adversarial.ML-KEM-768.kyber_valid_roundtrip
+PASS adversarial.ML-KEM-768.kyber_wrong_param_dk
+PASS adversarial.ML-KEM-768.kyber_zero_ct
+PASS adversarial.ML-KEM-768.liboqs_flipped_ct
+PASS adversarial.ML-KEM-768.liboqs_oversized_ct
+PASS adversarial.ML-KEM-768.liboqs_truncated_ct
+PASS adversarial.ML-KEM-768.liboqs_valid_roundtrip
+PASS adversarial.ML-KEM-768.liboqs_wrong_param_dk
+PASS adversarial.ML-KEM-768.liboqs_zero_ct
+PASS cross.ML-DSA-44.sig_deterministic_dilithium_sign_liboqs_verify
+PASS cross.ML-DSA-44.sig_dilithium_sign_liboqs_verify
+PASS cross.ML-DSA-44.sig_liboqs_sign_dilithium_verify
+PASS cross.ML-DSA-65.sig_deterministic_dilithium_sign_liboqs_verify
+PASS cross.ML-DSA-65.sig_dilithium_sign_liboqs_verify
+PASS cross.ML-DSA-65.sig_liboqs_sign_dilithium_verify
+PASS cross.ML-DSA-87.sig_deterministic_dilithium_sign_liboqs_verify
+PASS cross.ML-DSA-87.sig_dilithium_sign_liboqs_verify
+PASS cross.ML-DSA-87.sig_liboqs_sign_dilithium_verify
+PASS cross.ML-KEM-1024.kem_kyber_encaps_liboqs_decaps
+PASS cross.ML-KEM-1024.kem_liboqs_encaps_kyber_decaps
+PASS cross.ML-KEM-512.kem_kyber_encaps_liboqs_decaps
+PASS cross.ML-KEM-512.kem_liboqs_encaps_kyber_decaps
+PASS cross.ML-KEM-768.kem_kyber_encaps_liboqs_decaps
+PASS cross.ML-KEM-768.kem_liboqs_encaps_kyber_decaps
+SKIP ML-DSA-44.dilithium_deterministic_sig_sha256 (fresh keys per run; digest differs by design)
+PASS determinism.ML-DSA-44.dilithium_deterministic_sign_twice_identical
+SKIP ML-DSA-44.dilithium_hedged_sig1_sha256 (fresh keys per run; digest differs by design)
+PASS determinism.ML-DSA-44.dilithium_hedged_sign_twice_identical
+PASS determinism.ML-DSA-44.liboqs_hedged_sign_twice_identical
+SKIP ML-DSA-65.dilithium_deterministic_sig_sha256 (fresh keys per run; digest differs by design)
+PASS determinism.ML-DSA-65.dilithium_deterministic_sign_twice_identical
+SKIP ML-DSA-65.dilithium_hedged_sig1_sha256 (fresh keys per run; digest differs by design)
+PASS determinism.ML-DSA-65.dilithium_hedged_sign_twice_identical
+PASS determinism.ML-DSA-65.liboqs_hedged_sign_twice_identical
+SKIP ML-DSA-87.dilithium_deterministic_sig_sha256 (fresh keys per run; digest differs by design)
+PASS determinism.ML-DSA-87.dilithium_deterministic_sign_twice_identical
+SKIP ML-DSA-87.dilithium_hedged_sig1_sha256 (fresh keys per run; digest differs by design)
+PASS determinism.ML-DSA-87.dilithium_hedged_sign_twice_identical
+PASS determinism.ML-DSA-87.liboqs_hedged_sign_twice_identical
+PASS determinism.ML-KEM-768.kyber_encaps_twice_identical_ct
+PASS determinism.ML-KEM-768.kyber_encaps_twice_identical_ss
+PASS timing-present ML-DSA-44.dilithium-py.keygen run1=16.566176 run2=16.916669 (values differ by design)
+PASS timing-present ML-DSA-44.dilithium-py.sign run1=84.447171 run2=71.21916 (values differ by design)
+PASS timing-present ML-DSA-44.dilithium-py.verify run1=20.658488 run2=20.171656 (values differ by design)
+PASS timing-present ML-DSA-44.liboqs.keygen_ms_median run1=0.05777 run2=0.057443 (values differ by design)
+PASS timing-present ML-DSA-44.liboqs.sign_ms_median run1=0.205791 run2=0.132126 (values differ by design)
+PASS timing-present ML-DSA-44.liboqs.verify_ms_median run1=0.065474 run2=0.058042 (values differ by design)
+PASS timing-present ML-DSA-65.dilithium-py.keygen run1=27.246456 run2=27.596693 (values differ by design)
+PASS timing-present ML-DSA-65.dilithium-py.sign run1=125.927259 run2=129.757231 (values differ by design)
+PASS timing-present ML-DSA-65.dilithium-py.verify run1=31.995771 run2=31.504579 (values differ by design)
+PASS timing-present ML-DSA-65.liboqs.keygen_ms_median run1=0.100326 run2=0.098616 (values differ by design)
+PASS timing-present ML-DSA-65.liboqs.sign_ms_median run1=0.272927 run2=0.217543 (values differ by design)
+PASS timing-present ML-DSA-65.liboqs.verify_ms_median run1=0.095187 run2=0.095041 (values differ by design)
+PASS timing-present ML-DSA-87.dilithium-py.keygen run1=44.601684 run2=42.704644 (values differ by design)
+PASS timing-present ML-DSA-87.dilithium-py.sign run1=203.983393 run2=179.370659 (values differ by design)
+PASS timing-present ML-DSA-87.dilithium-py.verify run1=48.85658 run2=48.914226 (values differ by design)
+PASS timing-present ML-DSA-87.liboqs.keygen_ms_median run1=0.150888 run2=0.150177 (values differ by design)
+PASS timing-present ML-DSA-87.liboqs.sign_ms_median run1=0.312478 run2=0.315106 (values differ by design)
+PASS timing-present ML-DSA-87.liboqs.verify_ms_median run1=0.14628 run2=0.14527 (values differ by design)
+PASS timing-present ML-KEM-1024.kyber-py.decaps run1=23.275259 run2=23.176149 (values differ by design)
+PASS timing-present ML-KEM-1024.kyber-py.encaps run1=17.89566 run2=17.982482 (values differ by design)
+PASS timing-present ML-KEM-1024.kyber-py.keygen run1=13.993098 run2=14.107786 (values differ by design)
+PASS timing-present ML-KEM-1024.liboqs.decaps_ms_median run1=0.050631 run2=0.050738 (values differ by design)
+PASS timing-present ML-KEM-1024.liboqs.encaps_ms_median run1=0.042625 run2=0.042774 (values differ by design)
+PASS timing-present ML-KEM-1024.liboqs.keygen_ms_median run1=0.03974 run2=0.061574 (values differ by design)
+PASS timing-present ML-KEM-512.kyber-py.decaps run1=11.219494 run2=11.125601 (values differ by design)
+PASS timing-present ML-KEM-512.kyber-py.encaps run1=7.87412 run2=8.178607 (values differ by design)
+PASS timing-present ML-KEM-512.kyber-py.keygen run1=5.376967 run2=5.394653 (values differ by design)
+PASS timing-present ML-KEM-512.liboqs.decaps_ms_median run1=0.023321 run2=0.023375 (values differ by design)
+PASS timing-present ML-KEM-512.liboqs.encaps_ms_median run1=0.020709 run2=0.020902 (values differ by design)
+PASS timing-present ML-KEM-512.liboqs.keygen_ms_median run1=0.0184 run2=0.018859 (values differ by design)
+PASS timing-present ML-KEM-768.kyber-py.decaps run1=16.644364 run2=16.826706 (values differ by design)
+PASS timing-present ML-KEM-768.kyber-py.encaps run1=12.289486 run2=12.69494 (values differ by design)
+PASS timing-present ML-KEM-768.kyber-py.keygen run1=9.169281 run2=9.187003 (values differ by design)
+PASS timing-present ML-KEM-768.liboqs.decaps_ms_median run1=0.036857 run2=0.03694 (values differ by design)
+PASS timing-present ML-KEM-768.liboqs.encaps_ms_median run1=0.031591 run2=0.031608 (values differ by design)
+PASS timing-present ML-KEM-768.liboqs.keygen_ms_median run1=0.029756 run2=0.029772 (values differ by design)
+PASS memory-present ML-DSA-44.dilithium-py run1=20024KB run2=20008KB (values differ by design)
+PASS memory-present ML-DSA-44.liboqs run1=5892KB run2=6000KB (values differ by design)
+PASS memory-present ML-DSA-65.dilithium-py run1=20548KB run2=20304KB (values differ by design)
+PASS memory-present ML-DSA-65.liboqs run1=5888KB run2=6052KB (values differ by design)
+PASS memory-present ML-DSA-87.dilithium-py run1=21072KB run2=21136KB (values differ by design)
+PASS memory-present ML-DSA-87.liboqs run1=5972KB run2=5924KB (values differ by design)
+PASS memory-present ML-KEM-1024.kyber-py run1=19324KB run2=19332KB (values differ by design)
+PASS memory-present ML-KEM-1024.liboqs run1=5860KB run2=6112KB (values differ by design)
+PASS memory-present ML-KEM-512.kyber-py run1=19380KB run2=19384KB (values differ by design)
+PASS memory-present ML-KEM-512.liboqs run1=5808KB run2=5912KB (values differ by design)
+PASS memory-present ML-KEM-768.kyber-py run1=19208KB run2=19320KB (values differ by design)
+PASS memory-present ML-KEM-768.liboqs run1=5928KB run2=5816KB (values differ by design)
+PASS remediation-before.run1.contains-'REPRODUCED'
+PASS remediation-before.run2-clean.contains-'REPRODUCED'
+PASS remediation-after.run1.contains-'0 failed'
+PASS remediation-after.run2-clean.contains-'0 failed'
+--- comparison: 162 checks, 0 differences ---
+MATCH
